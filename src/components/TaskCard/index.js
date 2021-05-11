@@ -5,15 +5,16 @@ import { Button, Card, Col, Row } from 'react-bootstrap';
 import EditIcon from '@material-ui/icons/Edit';
 
 
-function TaskCard() {
+function TaskCard(props) {
+    console.log(props);
     return (
         <Card className="my-1">
             <Card.Body>
                 <Row className="d-flex justify-content-between align-middle">
                     <Col>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                            <label class="form-check-label" for="flexCheckDefault">
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
                                 Estudar React
                             </label>
                         </div>
