@@ -1,13 +1,15 @@
 import {React} from 'react';
 
-import {} from 'react-bootstrap';
 import Header from '../../components/general/Header';
+import ListTask from  '../../components/ListTask';
+import Footer from '../../components/general/Footer';
 
 function Home () {
     return(
         <>
             <Header/>
-            <h3>Hello world</h3>
+            <ListTask/>
+            <Footer/>
         </>
     )
 }
