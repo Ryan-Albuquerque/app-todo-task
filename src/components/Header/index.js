@@ -2,7 +2,7 @@ import {React} from 'react'
 import {Container, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import logoImg from '../../../assets/logo.png'
+import logoImg from '../../assets/logo.png'
 
 function Header(){
     return (

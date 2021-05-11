@@ -1,8 +1,8 @@
 import {React} from 'react';
 
-import Header from '../../components/general/Header';
+import Header from '../../components/Header';
 import ListTask from  '../../components/ListTask';
-import Footer from '../../components/general/Footer';
+import Footer from '../../components/Footer';
 
 function Home () {
     return(
