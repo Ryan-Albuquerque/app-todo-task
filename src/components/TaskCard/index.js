@@ -1,4 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
+
+import api, { getErrorMessage } from '../../services/api';
+import Notification from '../../utils/Notification'
+import Constants from '../../utils/constants'
 
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
@@ -6,17 +10,33 @@ import EditIcon from '@material-ui/icons/Edit';
 
 
 function TaskCard({data}) {
+    const [task, setTask] = useState(data);
+
+    const handleChangeStatus = async (e) =>{
+        setTask({...task, done: e.target.checked})
+
+        try {
+            await api.patch(`/task/${task._id}`, {done: e.target.checked})
+
+            Notification(Constants.Notification.types.success, 'Atualizado');
+        } catch (error) {
+            const message = getErrorMessage(error);
+
+            Notification(Constants.Notification.types.error, message);
+        }
+    }
     return (
         <Card className="my-1">
             <Card.Body>
                 <Row className="d-flex justify-content-between align-middle">
                     <Col>
                         <div className="form-check">
-                            <input className="form-check-input" type="checkbox" onChange={(e)=>{
-                                console.log(e);
-                            }} defaultChecked={data.done}/>
+                            <input className="form-check-input" 
+                            checked={task.done} 
+                            type="checkbox" 
+                            onChange={handleChangeStatus}/>
                             <label className="form-check-label" >
-                                {data.title}
+                                {task.title}
                             </label>
                         </div>
                     </Col>
