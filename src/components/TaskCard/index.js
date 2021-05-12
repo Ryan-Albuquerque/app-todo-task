@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useHistory } from 'react-router-dom';
 
 import api, { getErrorMessage } from '../../services/api';
 import Notification from '../../utils/Notification'
@@ -10,6 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 
 function TaskCard({data}) {
+    let history = useHistory();
     const [task, setTask] = useState(data);
 
     const handleChangeStatus = async (e) =>{
@@ -24,6 +26,10 @@ function TaskCard({data}) {
 
             Notification(Constants.Notification.types.error, message);
         }
+    }
+
+    const handleClick = () =>{
+        history.push(`/edit/${data._id}`)
     }
     return (
         <Card className="my-1">
@@ -41,7 +47,7 @@ function TaskCard({data}) {
                         </div>
                     </Col>
                     <Col className="d-flex justify-content-end">
-                        <Button className="py-0 border-0 bg-body text-dark">
+                        <Button className="py-0 border-0 bg-body text-dark" onClick={handleClick}>
                             <EditIcon/>
                         </Button>
                     </Col>

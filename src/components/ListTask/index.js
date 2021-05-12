@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -11,6 +11,7 @@ import Notification from '../../utils/Notification'
 import Constants from '../../utils/constants';
 
 function ListTask (){
+    let history = useHistory()
 
     const [taskList, setTaskList] = useState([]);
 
@@ -30,11 +31,14 @@ function ListTask (){
         fetchData();
     }, [])
 
+    const handleButton = () =>{
+        history.push('/new')
+    }
     return (
         <Container className="my-3">
             <Row>
                 <Col className="d-flex justify-content-end">
-                    <Button className="d-flex align-middle" variant="success">
+                    <Button className="d-flex align-middle" onClick={handleButton} variant="success">
                         <AddIcon />
                         Nova Task
                     </Button>
