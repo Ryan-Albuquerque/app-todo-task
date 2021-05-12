@@ -6,6 +6,13 @@ const Constants = {
             success:'success'
         }
     },
+    Priority:{
+        types:{
+            1:'Baixa',
+            2:'Média',
+            3:'Alta'
+        }
+    }
 }
 
 export default Constants;
