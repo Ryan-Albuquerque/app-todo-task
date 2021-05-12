@@ -13,9 +13,13 @@ function FormTask({props}) {
     const [task, setTask] = useState({})
 
     const handleCreateTask = async (e) =>{
-        e.preventDefault()
+        e.preventDefault();
+
         try {
-            task.priority = 3
+            task.done = false;
+            //to do:solve priority hard code
+            task.priority = 1;
+
             const response = await api.post('/task', task)
 
             setTimeout(() => {
