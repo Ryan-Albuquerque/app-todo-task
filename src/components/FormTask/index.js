@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from "react-router-dom";
 
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import api, { getErrorMessage } from '../../services/api';
@@ -7,7 +8,7 @@ import Notification from '../../utils/Notification';
 
 
 function FormTask({props}) {
-    console.log(props);
+    let history = useHistory();
     const [task, setTask] = useState({})
 
 
@@ -52,7 +53,7 @@ function FormTask({props}) {
                 Notification(Constants.Notification.types.success, response.data.message);
             }, 2000);
 
-            window.location.assign('/')
+            history.push('/')
         } catch (error) {
             const message = getErrorMessage(error)
 
