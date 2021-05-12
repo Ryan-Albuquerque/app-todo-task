@@ -43,9 +43,9 @@ function ListTask (){
 
             <Row>
                 <Container className="bg-light border border-light border-4 rounded my-3 p-3 ">
-                    {taskList?.map((task)=>{
-                        <TaskCard data={task} />
-                    })}
+                    {taskList.map((task, index) =>
+                        <TaskCard key={index} data={task} />
+                    )}
                 </Container>
             </Row>
         </Container>
