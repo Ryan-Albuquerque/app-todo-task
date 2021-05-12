@@ -8,40 +8,9 @@ import Notification from '../../utils/Notification';
 
 
 function FormTask({props}) {
+    
     let history = useHistory();
     const [task, setTask] = useState({})
-
-
-    const getDate = () => {
-        var today = new Date();
-        var day = today.getDate();
-        var month = today.getMonth()+1;
-        var year = today.getFullYear();
-      
-        if(day<10) {
-            day = '0'+day
-        } 
-      
-        if(month<10) {
-            month = '0'+month
-        } 
-      
-        today = `${year}-${month}-${day}`;
-        
-        setTask({...task, targetDate: today})
-    }
-
-    const fecthData = async () =>{
-        try {
-            const response = await api.get(`/task/${props.match.params.id}`)
-
-            setTask(response.data.task)
-        } catch (error) {
-            const message = getErrorMessage(error)
-
-            Notification(Constants.Notification.types.error, message);
-        }
-    }
 
     const handleCreateTask = async (e) =>{
         e.preventDefault()
@@ -62,13 +31,44 @@ function FormTask({props}) {
     }
 
     useEffect(() => {
+        const fecthData = async () =>{
+            try {
+                const response = await api.get(`/task/${props.match.params.id}`)
+    
+                setTask(response.data.task)
+            } catch (error) {
+                const message = getErrorMessage(error)
+    
+                Notification(Constants.Notification.types.error, message);
+            }
+        }
+
+        const getDate = () => {
+            var today = new Date();
+            var day = today.getDate();
+            var month = today.getMonth()+1;
+            var year = today.getFullYear();
+          
+            if(day<10) {
+                day = '0'+day
+            } 
+          
+            if(month<10) {
+                month = '0'+month
+            } 
+          
+            today = `${year}-${month}-${day}`;
+            
+            setTask({ targetDate: today})
+        }
+
         getDate()
 
         if(!props.isNew){
             fecthData()
         }
 
-    }, [])
+    }, [props])
 
     return (
         <Container className="my-4">
