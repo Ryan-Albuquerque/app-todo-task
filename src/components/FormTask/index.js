@@ -139,9 +139,9 @@ function FormTask({props}) {
                 <Form.Group as={Col} className="py-2 w-25">
                     <Form.Label>Prioridade</Form.Label>
                     <Form.Control as="select" disabled={!edit && !props.isNew} value={task.priority} onChange={(e)=>{setTask({...task, priority:e.target.value})}}>
-                        <option value={1}>{Constants.Priority.types[1]}</option>
-                        <option value={2}>{Constants.Priority.types[2]}</option>
-                        <option value={3}>{Constants.Priority.types[3]}</option>
+                        <option value={1}>{Constants.Priority.types[1].text}</option>
+                        <option value={2}>{Constants.Priority.types[2].text}</option>
+                        <option value={3}>{Constants.Priority.types[3].text}</option>
                     </Form.Control>
                 </Form.Group>
                 <Form.Group className="py-2 w-25">

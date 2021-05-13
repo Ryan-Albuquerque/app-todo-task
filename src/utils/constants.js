@@ -8,9 +8,18 @@ const Constants = {
     },
     Priority:{
         types:{
-            1:'Baixa',
-            2:'Média',
-            3:'Alta'
+            1:{
+                text:'Baixa',
+                color:'green'
+            },
+            2:{
+                text:'Média',
+                color:'yellow'
+            },
+            3:{
+                text:'Alta',
+                color:'red'
+            }
         }
     }
 }

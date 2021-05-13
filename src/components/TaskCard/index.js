@@ -12,6 +12,7 @@ import './style.css';
 
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Brightness1Icon from '@material-ui/icons/Brightness1';
 
 
 function TaskCard({data}) {
@@ -83,6 +84,7 @@ function TaskCard({data}) {
                             <label className="form-check-label" >
                                 {task.title}
                             </label>
+                            <Brightness1Icon className="px-1" style={{color: Constants.Priority.types[task.priority].color}}/>
                         </div>
                         <Card.Text className="text-muted subtitleCard">
                             {formatedDate(task.targetDate)}
