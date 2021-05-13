@@ -26,6 +26,11 @@ function TaskCard({data}) {
             await api.patch(`/task/${task._id}`, {done: e.target.checked})
 
             Notification(Constants.Notification.types.success, 'Atualizado');
+
+            setTimeout(() => {
+                history.go(0)
+            }, 1000);
+        
         } catch (error) {
             const message = getErrorMessage(error);
 

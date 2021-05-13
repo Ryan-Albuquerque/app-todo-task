@@ -21,6 +21,11 @@ function ListTask (){
             try {
                 const response = await api.get('/tasks');
 
+                var done = response.data.tasks.filter(el=>el.done===true)
+                var notDone = response.data.tasks.filter(el=>el.done === false);
+
+                response.data.tasks = notDone.concat(done);
+
                 setTaskList(response.data.tasks);
             } catch (error) {
                 const message = getErrorMessage(error);
