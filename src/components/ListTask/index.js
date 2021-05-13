@@ -35,7 +35,7 @@ function ListTask (){
         history.push('/new')
     }
     return (
-        <Container className="my-3">
+        <Container className="my-3 vh-100">
             <Row>
                 <Col className="d-flex justify-content-end">
                     <Button className="d-flex align-middle" onClick={handleButton} variant="success">

@@ -98,10 +98,10 @@ function FormTask({props}) {
     }, [props])
 
     return (
-        <Container className="my-4">
+        <Container className="my-3 vh-100">
             <Row className="mb-4">
                 <Col>
-                    <Button variant="primary" className="d-flex py-2" onClick={handleBack}>
+                    <Button variant="light" className="d-flex py-2" onClick={handleBack}>
                         <ArrowBackIcon/>
                         {'Voltar'}
                     </Button>
