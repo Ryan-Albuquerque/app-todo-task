@@ -7,6 +7,8 @@ import api, { getErrorMessage } from '../../services/api';
 import Constants from '../../utils/constants';
 import Notification from '../../utils/Notification';
 
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 
 function FormTask({props}) {
     
@@ -34,6 +36,10 @@ function FormTask({props}) {
         }
     }
 
+    const handleBack = ()=>{
+        history.push('/')
+    }
+    
     useEffect(() => {
         const fecthData = async () =>{
             try {
@@ -93,6 +99,14 @@ function FormTask({props}) {
 
     return (
         <Container className="my-4">
+            <Row className="mb-4">
+                <Col>
+                    <Button variant="primary" className="d-flex py-2" onClick={handleBack}>
+                        <ArrowBackIcon/>
+                        {'Voltar'}
+                    </Button>
+                </Col>
+            </Row>
             <Form >  
                 <Form.Group className="my-2">
                     <Form.Label>Título</Form.Label>
