@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
+
 
 import api, { getErrorMessage } from '../../services/api';
 import Notification from '../../utils/Notification'
 import Constants from '../../utils/constants'
 
 import { Button, Card, Col, Row } from 'react-bootstrap';
+import './style.css';
 
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -50,6 +53,23 @@ function TaskCard({data}) {
         }
     }
 
+    const formatedDate = (date) =>{
+        date = moment(date);
+
+        let year = date.year();
+        let month = date.month() + 1;
+        let day = date.date() + 1;
+
+        if(day<10) {
+            day = '0'+day;
+        } 
+      
+        if(month<10) {
+            month = '0'+month;
+        } 
+
+        return  `${day}/${month}/${year}`;
+    }
     return (
         <Card className="my-1">
             <Card.Body>
@@ -64,6 +84,9 @@ function TaskCard({data}) {
                                 {task.title}
                             </label>
                         </div>
+                        <Card.Text className="text-muted subtitleCard">
+                            {formatedDate(task.targetDate)}
+                        </Card.Text>
                     </Col>
                     <Col className="d-flex justify-content-end">
                         <Button className="p-0 border-0 bg-body text-dark" onClick={handleClick}>
