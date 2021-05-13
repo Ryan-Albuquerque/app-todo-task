@@ -137,9 +137,12 @@ function FormTask({props}) {
             </Form>
             <Row className="my-4">
                 <Col className="d-flex justify-content-end">
-                    <Button variant="success" onClick={handleCreateTask} type="submit">
-                        Salvar
-                    </Button>
+                    {props.isNew?
+                        (<Button variant="success" onClick={handleCreateTask} type="submit">
+                            Salvar
+                        </Button>):null
+                    }
+                    
                 </Col>
             </Row>
         </Container>
