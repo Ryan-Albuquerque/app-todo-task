@@ -8,6 +8,7 @@ import Constants from '../../utils/constants'
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 function TaskCard({data}) {
@@ -31,6 +32,24 @@ function TaskCard({data}) {
     const handleClick = () =>{
         history.push(`/edit/${data._id}`)
     }
+
+    const handleDelete = async () =>{
+        try {
+            await api.delete(`/task/${task._id}`)
+
+            Notification(Constants.Notification.types.success, 'Deletado com sucesso!');
+
+            setTimeout(() => {
+                history.go(0);
+            }, 2000);
+
+        } catch (error) {
+            const message = getErrorMessage(error);
+
+            Notification(Constants.Notification.types.error, message);
+        }
+    }
+
     return (
         <Card className="my-1">
             <Card.Body>
@@ -47,8 +66,11 @@ function TaskCard({data}) {
                         </div>
                     </Col>
                     <Col className="d-flex justify-content-end">
-                        <Button className="py-0 border-0 bg-body text-dark" onClick={handleClick}>
+                        <Button className="p-0 border-0 bg-body text-dark" onClick={handleClick}>
                             <EditIcon/>
+                        </Button>
+                        <Button  className="py-0 border-0 bg-body text-dark" onClick={handleDelete}>
+                            <DeleteIcon/>
                         </Button>
                     </Col>
                 </Row>
