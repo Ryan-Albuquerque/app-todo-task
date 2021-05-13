@@ -39,7 +39,7 @@ function FormTask({props}) {
     const handleBack = ()=>{
         history.push('/')
     }
-    
+
     useEffect(() => {
         const fecthData = async () =>{
             try {
@@ -108,15 +108,15 @@ function FormTask({props}) {
                 </Col>
             </Row>
             <Form >  
-                <Form.Group className="my-2">
+                <Form.Group className="py-2">
                     <Form.Label>Título</Form.Label>
                     <Form.Control type="text" placeholder="Estudo do react" disabled={!props.isNew} onChange={(e)=>setTask({...task, title: e.target.value})} defaultValue={task.title}/>
                 </Form.Group>
-                <Form.Group className="my-2">
+                <Form.Group className="py-2">
                     <Form.Label>Descrição</Form.Label>
                     <Form.Control as="textarea" rows={3} placeholder="Falar com algúem para ajudar" onChange={(e)=>setTask({...task, description: e.target.value})} disabled={!props.isNew} defaultValue={task.description}/>
                 </Form.Group>
-                <Form.Group as={Col} className="w-25">
+                <Form.Group as={Col} className="py-2 w-25">
                     <Form.Label>Prioridade</Form.Label>
                     <Form.Control as="select" disabled={!props.isNew} defaultValue={2} onChange={(e)=>setTask({...task, priority:e.target.value})}>
                         <option value={1}>{Constants.Priority.types[1]}</option>
@@ -124,13 +124,13 @@ function FormTask({props}) {
                         <option value={3}>{Constants.Priority.types[3]}</option>
                     </Form.Control>
                 </Form.Group>
-                <Form.Group className="my-2 w-25">
+                <Form.Group className="py-2 w-25">
                     <Form.Label>Autor</Form.Label>
                     <Form.Control type="text" placeholder="Ryan" onChange={(e)=>setTask({...task, author: e.target.value})} disabled={!props.isNew} defaultValue={task.author}/>
                 </Form.Group>
-                <Form.Group className="my-2 w-25">
+                <Form.Group className="py-2 w-25">
                     <Form.Label>Data de entrega</Form.Label>
-                    <input type="date" name="targetDate" disabled={!props.isNew} onChange={(e)=>{
+                    <input className="d-flex" type="date" name="targetDate" disabled={!props.isNew} onChange={(e)=>{
                         setTask({...task, targetDate: e.target.value})}} 
                         defaultValue={task.targetDate} />
                 </Form.Group>
