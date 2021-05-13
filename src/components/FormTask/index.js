@@ -14,6 +14,7 @@ function FormTask({props}) {
     
     let history = useHistory();
     const [task, setTask] = useState({});
+    const [edit, setEdit] = useState(false);
 
     const handleCreateTask = async (e) =>{
         e.preventDefault();
@@ -38,6 +39,25 @@ function FormTask({props}) {
 
     const handleBack = ()=>{
         history.push('/')
+    }
+
+    const handleSaveEditTask = async (e) =>{
+        e.preventDefault();
+
+        try {
+            const response = await api.patch(`/task/${task._id}`, task);
+
+            Notification(Constants.Notification.types.success, response.data.message);
+
+            setTimeout(() => {
+                history.push('/');
+            }, 2000);
+
+        } catch (error) {
+            const message = getErrorMessage(error)
+
+            Notification(Constants.Notification.types.error, message);
+        }
     }
 
     useEffect(() => {
@@ -110,15 +130,15 @@ function FormTask({props}) {
             <Form >  
                 <Form.Group className="py-2">
                     <Form.Label>Título</Form.Label>
-                    <Form.Control type="text" placeholder="Estudo do react" disabled={!props.isNew} onChange={(e)=>setTask({...task, title: e.target.value})} defaultValue={task.title}/>
+                    <Form.Control type="text" placeholder="Estudo do react" disabled={!edit && !props.isNew} onChange={(e)=>setTask({...task, title: e.target.value})} defaultValue={task.title}/>
                 </Form.Group>
                 <Form.Group className="py-2">
                     <Form.Label>Descrição</Form.Label>
-                    <Form.Control as="textarea" rows={3} placeholder="Falar com algúem para ajudar" onChange={(e)=>setTask({...task, description: e.target.value})} disabled={!props.isNew} defaultValue={task.description}/>
+                    <Form.Control as="textarea" rows={3} placeholder="Falar com algúem para ajudar" onChange={(e)=>setTask({...task, description: e.target.value})} disabled={!edit && !props.isNew} defaultValue={task.description}/>
                 </Form.Group>
                 <Form.Group as={Col} className="py-2 w-25">
                     <Form.Label>Prioridade</Form.Label>
-                    <Form.Control as="select" disabled={!props.isNew} defaultValue={2} onChange={(e)=>setTask({...task, priority:e.target.value})}>
+                    <Form.Control as="select" disabled={!edit && !props.isNew} value={task.priority} onChange={(e)=>{setTask({...task, priority:e.target.value})}}>
                         <option value={1}>{Constants.Priority.types[1]}</option>
                         <option value={2}>{Constants.Priority.types[2]}</option>
                         <option value={3}>{Constants.Priority.types[3]}</option>
@@ -126,21 +146,24 @@ function FormTask({props}) {
                 </Form.Group>
                 <Form.Group className="py-2 w-25">
                     <Form.Label>Autor</Form.Label>
-                    <Form.Control type="text" placeholder="Ryan" onChange={(e)=>setTask({...task, author: e.target.value})} disabled={!props.isNew} defaultValue={task.author}/>
+                    <Form.Control type="text" placeholder="Ryan" onChange={(e)=>setTask({...task, author: e.target.value})} disabled={!edit && !props.isNew} defaultValue={task.author}/>
                 </Form.Group>
                 <Form.Group className="py-2 w-25">
                     <Form.Label>Data de entrega</Form.Label>
-                    <input className="d-flex" type="date" name="targetDate" disabled={!props.isNew} onChange={(e)=>{
+                    <input className="d-flex" type="date" name="targetDate" disabled={!edit && !props.isNew} onChange={(e)=>{
                         setTask({...task, targetDate: e.target.value})}} 
                         defaultValue={task.targetDate} />
                 </Form.Group>
             </Form>
             <Row className="my-4">
                 <Col className="d-flex justify-content-end">
-                    {props.isNew?
-                        (<Button variant="success" onClick={handleCreateTask} type="submit">
+                    {props.isNew || edit?
+                        (<Button variant="success" onClick={edit ? handleSaveEditTask :handleCreateTask} type="submit">
                             Salvar
-                        </Button>):null
+                        </Button>)
+                        :(<Button variant="success" onClick={(e)=>setEdit(true)} type="submit">
+                            Editar
+                        </Button>)
                     }
                     
                 </Col>
