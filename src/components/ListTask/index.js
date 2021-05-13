@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 
 import AddIcon from '@material-ui/icons/Add';
+import Brightness1Icon from '@material-ui/icons/Brightness1';
 
 import api, { getErrorMessage } from '../../services/api';
 import TaskCard from '../TaskCard';
@@ -55,6 +56,16 @@ function ListTask (){
                     {taskList.map((task, index) =>
                         <TaskCard key={index} data={task} />
                     )}
+
+                    <div className="mt-4">
+                        <Brightness1Icon className="px-1" style={{color: Constants.Priority.types[1].color}}/>
+                        <label className="text-muted">{Constants.Priority.types[1].text}</label>
+                        <Brightness1Icon className="px-1" style={{color: Constants.Priority.types[2].color}}/>
+                        <label className="text-muted">{Constants.Priority.types[2].text}</label>
+                        <Brightness1Icon className="px-1" style={{color: Constants.Priority.types[3].color}}/>
+                        <label className="text-muted">{Constants.Priority.types[3].text}</label>
+                    </div>
+
                 </Container>
             </Row>
         </Container>
