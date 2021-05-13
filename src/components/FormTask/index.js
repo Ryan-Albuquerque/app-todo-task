@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
+import moment from 'moment';
 
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import api, { getErrorMessage } from '../../services/api';
@@ -10,23 +11,22 @@ import Notification from '../../utils/Notification';
 function FormTask({props}) {
     
     let history = useHistory();
-    const [task, setTask] = useState({})
+    const [task, setTask] = useState({});
 
     const handleCreateTask = async (e) =>{
         e.preventDefault();
 
         try {
             task.done = false;
-            //to do:solve priority hard code
-            task.priority = 1;
 
-            const response = await api.post('/task', task)
+            const response = await api.post('/task', task);
+
+            Notification(Constants.Notification.types.success, response.data.message);
 
             setTimeout(() => {
-                Notification(Constants.Notification.types.success, response.data.message);
+                history.push('/');
             }, 2000);
 
-            history.push('/')
         } catch (error) {
             const message = getErrorMessage(error)
 
@@ -37,8 +37,24 @@ function FormTask({props}) {
     useEffect(() => {
         const fecthData = async () =>{
             try {
-                const response = await api.get(`/task/${props.match.params.id}`)
-    
+                const response = await api.get(`/task/${props.match.params.id}`);
+
+                response.data.task.targetDate = moment(response.data.task.targetDate);
+
+                let year = response.data.task.targetDate.year();
+                let month = response.data.task.targetDate.month() + 1;
+                let day = response.data.task.targetDate.date() + 1;
+
+                if(day<10) {
+                    day = '0'+day;
+                } 
+              
+                if(month<10) {
+                    month = '0'+month;
+                } 
+
+                response.data.task.targetDate = `${year}-${month}-${day}`
+
                 setTask(response.data.task)
             } catch (error) {
                 const message = getErrorMessage(error)
@@ -47,7 +63,7 @@ function FormTask({props}) {
             }
         }
 
-        const getDate = () => {
+        const setInitalOptions = () => {
             var today = new Date();
             var day = today.getDate();
             var month = today.getMonth()+1;
@@ -63,10 +79,11 @@ function FormTask({props}) {
           
             today = `${year}-${month}-${day}`;
             
-            setTask({ targetDate: today})
+            setTask({targetDate: today, priority: 2})
         }
 
-        getDate()
+        setInitalOptions()
+
 
         if(!props.isNew){
             fecthData()
@@ -87,10 +104,10 @@ function FormTask({props}) {
                 </Form.Group>
                 <Form.Group as={Col} className="w-25">
                     <Form.Label>Prioridade</Form.Label>
-                    <Form.Control as="select" disabled={!props.isNew} defaultValue={Constants.Priority.types[task.priority]}>
-                        <option>Baixa</option>
-                        <option>Média</option>
-                        <option>Alta</option>
+                    <Form.Control as="select" disabled={!props.isNew} defaultValue={2} onChange={(e)=>setTask({...task, priority:e.target.value})}>
+                        <option value={1}>{Constants.Priority.types[1]}</option>
+                        <option value={2}>{Constants.Priority.types[2]}</option>
+                        <option value={3}>{Constants.Priority.types[3]}</option>
                     </Form.Control>
                 </Form.Group>
                 <Form.Group className="my-2 w-25">
@@ -99,7 +116,9 @@ function FormTask({props}) {
                 </Form.Group>
                 <Form.Group className="my-2 w-25">
                     <Form.Label>Data de entrega</Form.Label>
-                    <input type="date" name="targetDate" disabled={!props.isNew} onChange={(e)=>setTask({...task, targetDate: e.target.value})} defaultValue={task.targetDate} />
+                    <input type="date" name="targetDate" disabled={!props.isNew} onChange={(e)=>{
+                        setTask({...task, targetDate: e.target.value})}} 
+                        defaultValue={task.targetDate} />
                 </Form.Group>
             </Form>
             <Row className="my-4">
